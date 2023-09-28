@@ -7,7 +7,7 @@ public class AgendaTelefonica {
     private List<Contato> contatos;
 
     public AgendaTelefonica() {
-        this.contatos = new ArrayList<>();
+        contatos = new ArrayList<>();
     }
 
     public void adicionarContato(Contato contato) {
@@ -15,17 +15,23 @@ public class AgendaTelefonica {
     }
 
     public void removerContato(String nome) {
+        Contato contatoParaRemover = null;
         for (Contato contato : contatos) {
-            if (contato.getNome().equals(nome)) {
-                contatos.remove(contato);
+            if (contato.getNome().equalsIgnoreCase(nome)) {
+                contatoParaRemover = contato;
                 break;
             }
+        }
+        if (contatoParaRemover != null) {
+            contatos.remove(contatoParaRemover);
+        } else {
+            System.out.println("Contato não encontrado.");
         }
     }
 
     public Contato buscarContato(String nome) {
         for (Contato contato : contatos) {
-            if (contato.getNome().equals(nome)) {
+            if (contato.getNome().equalsIgnoreCase(nome)) {
                 return contato;
             }
         }
@@ -35,7 +41,7 @@ public class AgendaTelefonica {
     public void atualizarContato(String nome, Contato novoContato) {
         for (int i = 0; i < contatos.size(); i++) {
             Contato contato = contatos.get(i);
-            if (contato.getNome().equals(nome)) {
+            if (contato.getNome().equalsIgnoreCase(nome)) {
                 contatos.set(i, novoContato);
                 break;
             }
@@ -43,10 +49,13 @@ public class AgendaTelefonica {
     }
 
     public void listarContatos() {
-        for (Contato contato : contatos) {
-            System.out.println("Nome: " + contato.getNome());
-            System.out.println("Número de telefone: " + contato.getNumeroTelefone());
-            System.out.println();
+        if (contatos.isEmpty()) {
+            System.out.println("A agenda está vazia.");
+        } else {
+            System.out.println("Contatos na agenda:");
+            for (Contato contato : contatos) {
+                System.out.println(contato);
+            }
         }
     }
 
